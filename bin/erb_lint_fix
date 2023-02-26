@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+APP_ROOT = File.expand_path("..", __dir__)
+Dir.chdir(APP_ROOT) do
+  exec "bundle exec erblint --lint-all --autocorrect"
+rescue Errno::ENOENT
+  warn "erb_lint_fix executable was not detected in the system."
+  exit 1
+end
