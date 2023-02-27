@@ -25,7 +25,7 @@ echo "[ bin/erb_lint ] Linting ERB"
 bin/erb_lint
 
 echo "[ bin/ci ] Running tests"
-bundle exec rails test
+bundle exec rspec
 
 echo "[ bin/ci ] Done"
 

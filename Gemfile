@@ -76,11 +76,15 @@ group :development, :test do
 
   gem "standard", require: false
   gem "rubocop-rails", require: false
-  gem "rubocop-minitest", require: false
+  gem "rubocop-rspec", require: false
   gem "rubocop-performance", require: false
 
   gem "erb_lint", require: false
   gem "better_html", require: false
+
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "faker"
 end
 
 group :development do
@@ -99,4 +103,15 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+
+  gem "vcr"
+  gem "webmock"
+
+  gem "shoulda-matchers"
+  gem "rspec-html-matchers"
+  gem "database_cleaner-active_record"
+  gem "database_cleaner-redis"
+  gem "rails-controller-testing"
+
+  gem "rspec_junit_formatter"
 end

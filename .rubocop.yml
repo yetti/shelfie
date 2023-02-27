@@ -1,7 +1,7 @@
 require:
   - standard
   - rubocop-rails
-  - rubocop-minitest
+  - rubocop-rspec
   - rubocop-performance
 
 inherit_gem:
@@ -17,7 +17,7 @@ AllCops:
 
 Rails:
   Enabled: true
-Minitest:
+RSpec:
   Enabled: true
 Bundler/DuplicatedGem:
   Enabled: false
