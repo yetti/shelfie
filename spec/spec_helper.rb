@@ -46,6 +46,12 @@ SimpleCov.start("rails") do
   add_filter "lib/monkey_patches/annotate_routes.rb"
 end
 
+require "knapsack_pro"
+
+# Custom Knapsack Pro config here
+
+KnapsackPro::Adapters::RSpecAdapter.bind
+
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

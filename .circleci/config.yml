@@ -89,7 +89,12 @@ jobs:
       - run:
           command: 'bundle exec rails assets:precompile'
           name: Precompile assets
-      - ruby/rspec-test
+#      - ruby/rspec-test
+      - run:
+          name: RSpec with knapsack_pro
+          command: |
+            KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC=${KNAPSACK_PRO} \
+              bundle exec rake knapsack_pro:rspec
       - run:
           name: Stash Coverage Results
           command: |
