@@ -11,6 +11,7 @@ AllCops:
   TargetRubyVersion: 3.2
   NewCops: enable
   Exclude:
+    - bin/**/*
     - node_modules/**/*
     - public/**/*
     - vendor/**/*
