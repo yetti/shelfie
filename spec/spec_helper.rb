@@ -12,6 +12,8 @@ SimpleCov.start("rails") do
 
   # minimum_coverage 80
 
+  command_name "Job #{ENV["CIRCLE_NODE_INDEX"]}" if ENV["CIRCLE_NODE_INDEX"]
+
   formatter SimpleCov::Formatter::MultiFormatter.new(
     [
       SimpleCov::Formatter::JSONFormatter,
@@ -43,24 +45,6 @@ SimpleCov.start("rails") do
   # Remove when fixed in plugin.
   add_filter "lib/monkey_patches/annotate_routes.rb"
 end
-
-require "knapsack_pro"
-
-TMP_RSPEC_XML_REPORT = "tmp/test-reports/rspec/queue_mode/rspec.xml"
-FINAL_RSPEC_XML_REPORT = "tmp/test-reports/rspec/queue_mode/rspec_final_results.xml"
-
-# this is needed when you use knapsack_pro Queue Mode
-KnapsackPro::Hooks::Queue.before_queue do
-  SimpleCov.command_name("rspec_ci_node_#{KnapsackPro::Config::Env.ci_node_index}")
-end
-
-KnapsackPro::Hooks::Queue.after_subset_queue do |queue_id, subset_queue_id|
-  if File.exist?(TMP_RSPEC_XML_REPORT)
-    FileUtils.mv(TMP_RSPEC_XML_REPORT, FINAL_RSPEC_XML_REPORT)
-  end
-end
-
-KnapsackPro::Adapters::RSpecAdapter.bind
 
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|

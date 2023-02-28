@@ -67,8 +67,6 @@ jobs:
       CI: 'true'
       DATABASE_URL: postgres://postgres:@localhost:5432/adventure_money_test
       REDIS_URL: redis://localhost:6379
-      KNAPSACK_PRO_CI_NODE_BUILD_ID: shelfie_
-      KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
     parallelism: 2
     steps:
       - checkout
@@ -91,21 +89,47 @@ jobs:
       - run:
           command: 'bundle exec rails assets:precompile'
           name: Precompile assets
+      - ruby/rspec-test
       - run:
-          name: RSpec with knapsack_pro
+          name: Stash Coverage Results
           command: |
-            export CIRCLE_TEST_REPORTS=/tmp/test-results
-            mkdir $CIRCLE_TEST_REPORTS
-            KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC=${KNAPSACK_PRO} \
-              bundle exec rake \
-              "knapsack_pro:queue:rspec[--format documentation --format RspecJunitFormatter --out tmp/test-reports/rspec/queue_mode/rspec.xml]"
-      - store_test_results:
-          path: tmp/test-reports
-      - store_artifacts:
-          path: tmp/test-reports
-          destination: tmp/test-reports
+            mkdir coverage_results
+            cp -R coverage/.resultset.json coverage_results/.resultset-${CIRCLE_NODE_INDEX}.json
+      - persist_to_workspace:
+          root: .
+          paths:
+            - coverage_results
+
+  coverage:
+    resource_class: large
+    docker:
+      - image: cimg/ruby:3.2.1-browsers
+
+      - image: cimg/postgres:14.5
+        environment:
+          POSTGRES_USER: postgres
+
+    environment:
+      BUNDLE_JOBS: 3
+      BUNDLE_RETRY: 3
+      RAILS_ENV: test
+      CI: 'true'
+      DATABASE_URL: postgres://postgres:@localhost:5432/adventure_money_test
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - ruby/install-deps
+      - run:
+          name: Merge and check coverage
+          command: |
+            bundle exec rake coverage:report
       - codecov/upload
       - sonarcloud/scan
+      - store_artifacts:
+          path: coverage_results
+      - store_artifacts:
+          path: coverage
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -116,6 +140,9 @@ workflows:
       - security
       - linting
       - test:
-          context: SonarCloud
           requires:
             - linting
+      - coverage:
+          context: SonarCloud
+          requires:
+            - test
