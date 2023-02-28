@@ -50,3 +50,6 @@
 
 # Ignore RSpec history
 /spec/examples.txt
+
+# Ignore Simplecov directory
+/coverage

@@ -113,5 +113,9 @@ group :test do
   gem "database_cleaner-redis"
   gem "rails-controller-testing"
 
+  gem "simplecov", require: false
+  gem "simplecov-lcov", require: false
+  gem "simplecov-json", require: false
+  gem "simplecov-cobertura", require: false
   gem "rspec_junit_formatter"
 end
