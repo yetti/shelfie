@@ -3,6 +3,10 @@
 set -e
 
 export CI=true
+export RAILS_ENV=test
+
+echo "\n== Prepare the test database\n"
+bin/rails db:prepare
 
 echo "\n== Linting code with safe autocorrection\n"
 bin/rubocop -A

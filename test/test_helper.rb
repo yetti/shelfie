@@ -4,6 +4,11 @@ ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
 
+require "factory_bot"
+require "minitest/reporters"
+
+Dir[Rails.root.join("test/support/**/*")].each { |f| require f }
+
 module ActiveSupport
   class TestCase
     # Run tests in parallel with specified workers
@@ -13,5 +18,11 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
+    include FactoryBot::Syntax::Methods
+
+    Minitest::Reporters.use! [
+                               Minitest::Reporters::SpecReporter.new,
+                               Minitest::Reporters::JUnitReporter.new
+                             ] unless ENV.fetch("RM_INFO", nil).present?
   end
 end
