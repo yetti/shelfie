@@ -41,6 +41,7 @@
 
 node_modules
 /vendor/bundle
+/.yarn
 
 # Vite Ruby
 /public/vite*
