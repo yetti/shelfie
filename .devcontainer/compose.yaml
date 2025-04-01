@@ -23,8 +23,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-      mail:
-        condition: service_started
 
   selenium:
     image: selenium/standalone-chromium
@@ -47,17 +45,6 @@ services:
     environment:
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
-
-  mail:
-    labels:
-      - dev.orbstack.domains=mail.shelfie.local
-      - dev.orbstack.http-port=1080
-    image: marlonb/mailcrab:latest
-    ports:
-      - "1080:1080"
-      - "1025:1025"
-    networks:
-      - default
 
 volumes:
   postgres-data:
