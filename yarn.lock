@@ -1626,7 +1626,7 @@ __metadata:
     "@tailwindcss/vite": "npm:^4.0.17"
     rollup: "npm:^4.38.0"
     tailwindcss: "npm:^4.0.17"
-    vite: "npm:^6.2.3"
+    vite: "npm:^6.2.4"
     vite-plugin-rails: "npm:^0.5.0"
     vite-plugin-ruby: "npm:^5.1.1"
   languageName: unknown
@@ -1856,7 +1856,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^6.2.3":
+"vite@npm:^6.2.4":
   version: 6.2.4
   resolution: "vite@npm:6.2.4"
   dependencies:
