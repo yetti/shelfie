@@ -9,6 +9,6 @@ RUN sudo apt update -qq && \
   sudo rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Enable jemalloc and YJIT
-ENV LD_PRELOAD="libjemalloc.so.2" \
+ENV LD_PRELOAD="/usr/lib/aarch64-linux-gnu/libjemalloc.so.2" \
   MALLOC_CONF="background_thread:true,metadata_thp:auto,dirty_decay_ms:5000,muzzy_decay_ms:5000,narenas:2" \
   RUBY_YJIT_ENABLE="1"
